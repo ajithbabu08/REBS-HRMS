@@ -92,11 +92,11 @@ class LeaveDao extends DatabaseAccessor<AppDatabase> with _$LeaveDaoMixin {
             ..where((t) => t.employeeId.equals(employeeId)))
           .go();
       await into(leaveBalanceTable).insertOnConflictUpdate(
-        LeaveBalanceTableCompanion(
-          employeeId: Value(employeeId),
-          casual: Value(casual),
-          sick: Value(sick),
-          lastSyncedAt: Value(DateTime.now()),
+        LeaveBalanceTableCompanion.insert(
+          employeeId: employeeId,
+          casualLeaves: casual,
+          sickLeaves: sick,
+          lastUpdated: DateTime.now(),
         ),
       );
     });

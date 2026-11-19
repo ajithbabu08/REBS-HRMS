@@ -10,6 +10,7 @@ class AppConfig {
   final String companyTimezone;
   final Duration connectTimeout;
   final Duration receiveTimeout;
+  final String defaultEmployeeId;
   final double? debugLatitude;
   final double? debugLongitude;
 
@@ -22,6 +23,7 @@ class AppConfig {
     this.companyTimezone = 'Asia/Kolkata',
     this.connectTimeout = const Duration(seconds: 3),
     this.receiveTimeout = const Duration(seconds: 5),
+    this.defaultEmployeeId = 'REBS-EMP-001',
     this.debugLatitude,
     this.debugLongitude,
   });
