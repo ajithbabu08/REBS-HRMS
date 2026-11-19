@@ -1,0 +1,178 @@
+{
+  "employee": {
+    "employeeId": "REBS-EMP-001",
+    "name": "Ajith Babu",
+    "department": "Engineering",
+    "designation": "Flutter Developer",
+    "email": "ajith.babu@rebs.com",
+    "joinDate": "2024-01-15",
+    "officeLocation": {
+      "latitude": 10.0303,
+      "longitude": 76.3358,
+      "radiusMeters": 200,
+      "address": "Teqbae Innovations & Solutions India Pvt Ltd, Kakkanad"
+    },
+    "companyTimezone": "Asia/Kolkata"
+  },
+  "attendance": [
+    {
+      "date": "2026-11-19",
+      "employeeId": "REBS-EMP-001",
+      "checkIn": {
+        "timestamp": "2026-11-19T23:28:37.000",
+        "latitude": 10.03035,
+        "longitude": 76.33585000000001,
+        "officeDistanceMeters": 8
+      },
+      "checkOut": {
+        "timestamp": "2026-11-19T23:29:49.000",
+        "latitude": 10.03035,
+        "longitude": 76.33585000000001,
+        "officeDistanceMeters": 8
+      },
+      "status": "COMPLETED"
+    },
+    {
+      "date": "2026-11-20",
+      "employeeId": "REBS-EMP-001",
+      "checkIn": {
+        "timestamp": "2026-11-20T00:31:25.000",
+        "latitude": 10.03035,
+        "longitude": 76.33585000000001,
+        "officeDistanceMeters": 8
+      },
+      "checkOut": {
+        "timestamp": "2026-11-20T00:32:07.000",
+        "latitude": 10.03035,
+        "longitude": 76.33585000000001,
+        "officeDistanceMeters": 8
+      },
+      "status": "COMPLETED"
+    }
+  ],
+  "leaveBalance": {
+    "casual": 2,
+    "sick": 3
+  },
+  "leaveRequests": [
+    {
+      "id": "3435dd62-2849-46f7-9820-2b47864b2b48",
+      "leaveRequestId": "3435dd62-2849-46f7-9820-2b47864b2b48",
+      "employeeId": "REBS-EMP-001",
+      "leaveType": "CASUAL",
+      "startDate": "2026-11-19",
+      "endDate": "2026-11-19",
+      "numberOfDays": 1,
+      "reason": "ohxqiniwxindinwh",
+      "status": "PENDING",
+      "createdAt": "2026-11-19T14:06:07.221Z",
+      "submittedAt": "2026-11-19T14:06:07.221Z"
+    },
+    {
+      "id": "540e53e3-e649-4836-be6a-685d5916fbb7",
+      "leaveRequestId": "540e53e3-e649-4836-be6a-685d5916fbb7",
+      "employeeId": "REBS-EMP-001",
+      "leaveType": "SICK",
+      "startDate": "2026-11-20",
+      "endDate": "2026-11-20",
+      "numberOfDays": 1,
+      "reason": "howdininwibwdibcehwfib",
+      "status": "PENDING",
+      "createdAt": "2026-11-19T14:06:32.469Z",
+      "submittedAt": "2026-11-19T14:06:32.469Z"
+    }
+  ],
+  "processedEventIds": {
+    "c2c86638-ce18-4718-8a17-8cc5b6e5c73a": {
+      "status": 201,
+      "body": {
+        "success": true,
+        "data": {
+          "date": "2026-11-19",
+          "employeeId": "REBS-EMP-001",
+          "checkIn": {
+            "timestamp": "2026-11-19T23:28:37.000",
+            "latitude": 10.03035,
+            "longitude": 76.33585000000001,
+            "officeDistanceMeters": 8
+          },
+          "checkOut": null,
+          "status": "CHECKED_IN"
+        },
+        "message": "Check-in recorded successfully",
+        "error": null
+      }
+    },
+    "cf8bf955-bb11-4941-b875-82474e81fc2d": {
+      "status": 201,
+      "body": {
+        "success": true,
+        "data": {
+          "date": "2026-11-19",
+          "employeeId": "REBS-EMP-001",
+          "checkIn": {
+            "timestamp": "2026-11-19T23:28:37.000",
+            "latitude": 10.03035,
+            "longitude": 76.33585000000001,
+            "officeDistanceMeters": 8
+          },
+          "checkOut": {
+            "timestamp": "2026-11-19T23:29:49.000",
+            "latitude": 10.03035,
+            "longitude": 76.33585000000001,
+            "officeDistanceMeters": 8
+          },
+          "status": "COMPLETED"
+        },
+        "message": "Check-out recorded successfully",
+        "error": null
+      }
+    },
+    "4110b454-f357-44d5-97b8-ebf04ecb45fb": {
+      "status": 201,
+      "body": {
+        "success": true,
+        "data": {
+          "date": "2026-11-20",
+          "employeeId": "REBS-EMP-001",
+          "checkIn": {
+            "timestamp": "2026-11-20T00:31:25.000",
+            "latitude": 10.03035,
+            "longitude": 76.33585000000001,
+            "officeDistanceMeters": 8
+          },
+          "checkOut": null,
+          "status": "CHECKED_IN"
+        },
+        "message": "Check-in recorded successfully",
+        "error": null
+      }
+    },
+    "1dceece0-cc41-44ad-ba01-f54597c49a40": {
+      "status": 201,
+      "body": {
+        "success": true,
+        "data": {
+          "date": "2026-11-20",
+          "employeeId": "REBS-EMP-001",
+          "checkIn": {
+            "timestamp": "2026-11-20T00:31:25.000",
+            "latitude": 10.03035,
+            "longitude": 76.33585000000001,
+            "officeDistanceMeters": 8
+          },
+          "checkOut": {
+            "timestamp": "2026-11-20T00:32:07.000",
+            "latitude": 10.03035,
+            "longitude": 76.33585000000001,
+            "officeDistanceMeters": 8
+          },
+          "status": "COMPLETED"
+        },
+        "message": "Check-out recorded successfully",
+        "error": null
+      }
+    }
+  },
+  "scenario": "normal"
+}

@@ -1,0 +1,42 @@
+name: rebs_hrms
+description: "REBS HRMS Employee Workspace"
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.11.5
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  # State management
+  flutter_bloc: ^9.1.1
+  equatable: ^2.0.7
+  # Networking
+  dio: ^5.8.0+1
+  # Database
+  drift: ^2.25.0
+  sqlite3_flutter_libs: ^0.5.28
+  path_provider: ^2.1.5
+  path: ^1.9.1
+  # Location
+  geolocator: ^13.0.2
+  # Connectivity
+  connectivity_plus: ^6.1.4
+  # Utils
+  uuid: ^4.5.1
+  intl: ^0.20.2
+  get_it: ^8.0.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  drift_dev: ^2.25.0
+  build_runner: ^2.4.15
+  bloc_test: ^10.0.0
+  mocktail: ^1.0.4
+
+flutter:
+  uses-material-design: true
