@@ -66,6 +66,16 @@ class _DebugPanelPageState extends State<DebugPanelPage> {
                     runSpacing: 6,
                     children: [
                       ActionChip(
+                        avatar: const Icon(Icons.cloud_done, size: 16),
+                        label: const Text('Live Cloud (Render)'),
+                        onPressed: () {
+                          setDialogState(() {
+                            controller.text = 'https://rebs-hrms.onrender.com';
+                            testStatus = '';
+                          });
+                        },
+                      ),
+                      ActionChip(
                         avatar: const Icon(Icons.usb, size: 16),
                         label: const Text('USB / ADB (localhost:3000)'),
                         onPressed: () {

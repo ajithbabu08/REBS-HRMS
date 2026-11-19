@@ -48,7 +48,7 @@ class AppConfig {
     environment: Environment.prod,
     apiBaseUrl: String.fromEnvironment(
       'API_BASE_URL',
-      defaultValue: 'https://api.rebs.com',
+      defaultValue: 'https://rebs-hrms.onrender.com',
     ),
   );
 
