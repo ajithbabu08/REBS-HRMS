@@ -6,8 +6,8 @@ An offline-first, production-grade Flutter mobile application for employee workp
 
 ## 1. Quick Review & Live Evaluation Links
 
-* **Live Cloud Backend (Zero Setup Required):** [`https://rebs-hrms.onrender.com`](https://rebs-hrms.onrender.com)
-  * Health check: [`https://rebs-hrms.onrender.com/health`](https://rebs-hrms.onrender.com/health)
+* **Live API URL:** [`https://rebs-hrms.onrender.com`](https://rebs-hrms.onrender.com)
+* **API Health Check:** [`https://rebs-hrms.onrender.com/health`](https://rebs-hrms.onrender.com/health)
 * **GitHub Repository:** [`https://github.com/ajithbabu08/REBS-HRMS`](https://github.com/ajithbabu08/REBS-HRMS)
 * **Company:** Teqbae Innovations & Solutions India Pvt Ltd
 * **Office Location:** AKL Heights, Seaport - Airport Road, Thrikkakara, Kakkanad, Kochi, Kerala 682021
@@ -97,9 +97,9 @@ You can evaluate the project using any of the following 3 backend setups:
 
 ### Option 1: Live Cloud Backend (Recommended — Zero Setup)
 The app is already configured to connect to the live cloud backend:
-```
-https://rebs-hrms.onrender.com
-```
+* **Live API URL:** `https://rebs-hrms.onrender.com`
+* **API Health Check:** `https://rebs-hrms.onrender.com/health`
+
 * No local server or terminal commands required!
 * Open the app on your phone or emulator and test immediately.
 
