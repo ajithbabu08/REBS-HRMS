@@ -127,34 +127,33 @@ class SettingsPage extends StatelessWidget {
           ),
           const SizedBox(height: 24),
 
-          // Debug Panel action (available in debug builds)
-          if (kDebugMode)
-            SizedBox(
-              width: double.infinity,
-              height: 48,
-              child: ElevatedButton.icon(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const DebugPanelPage(),
-                    ),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Theme.of(context).primaryColor,
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+          // Debug Panel action (accessible for evaluation & simulation)
+          SizedBox(
+            width: double.infinity,
+            height: 48,
+            child: ElevatedButton.icon(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const DebugPanelPage(),
                   ),
-                ),
-                icon: const Icon(Icons.developer_mode),
-                label: const Text(
-                  'Open Debug Simulation Panel',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Theme.of(context).primaryColor,
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
                 ),
               ),
+              icon: const Icon(Icons.developer_mode),
+              label: const Text(
+                'Open Debug Simulation Panel',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
             ),
+          ),
         ],
       ),
     );

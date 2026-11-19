@@ -238,12 +238,6 @@ class _DebugPanelPageState extends State<DebugPanelPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (!kDebugMode) {
-      return const Scaffold(
-        body: Center(child: Text('Debug features unavailable in release builds.')),
-      );
-    }
-
     final override = _locationService.currentDebugOverride;
 
     return Scaffold(

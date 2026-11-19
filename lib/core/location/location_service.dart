@@ -60,7 +60,7 @@ class LocationServiceImpl implements LocationService {
   double? _debugLon;
 
   LocationServiceImpl({required AppConfig config}) : _config = config {
-    if (kDebugMode && _config.hasDebugLocationOverride) {
+    if (_config.hasDebugLocationOverride) {
       _debugLat = _config.debugLatitude;
       _debugLon = _config.debugLongitude;
     }
@@ -74,10 +74,8 @@ class LocationServiceImpl implements LocationService {
 
   @override
   void setDebugOverride({double? latitude, double? longitude}) {
-    if (kDebugMode) {
-      _debugLat = latitude;
-      _debugLon = longitude;
-    }
+    _debugLat = latitude;
+    _debugLon = longitude;
   }
 
   @override
@@ -96,8 +94,8 @@ class LocationServiceImpl implements LocationService {
 
   @override
   Future<Position> getCurrentPosition() async {
-    // Debug simulation bypass (only in debug mode)
-    if (kDebugMode && _debugLat != null && _debugLon != null) {
+    // Debug simulation bypass when active
+    if (_debugLat != null && _debugLon != null) {
       return Position(
         latitude: _debugLat!,
         longitude: _debugLon!,

@@ -91,7 +91,41 @@ lib/
 
 ---
 
-## 5. Testing & Evaluation Guide
+## 5. Location Geofencing & Reviewer Simulation Guide
+
+> [!IMPORTANT]
+> **Strictly for Evaluation & Testing Purposes:**
+> In production, the app strictly uses live device hardware GPS (`geolocator`) to validate that an employee is physically within 200 meters of the office (`10.0303° N, 76.3358° E`).
+>
+> However, because reviewers and hiring managers evaluate this assignment remotely (outside the Kakkanad, Kochi office), the app includes **built-in location testing tools** so that every evaluator can thoroughly test both positive (inside office) and negative (outside office) scenarios without needing third-party GPS spoofing apps.
+
+### How the App Handles Location:
+
+1. **If the Reviewer is Physically at the Office:**
+   * The app reads authentic hardware GPS coordinates directly.
+   * If within 200m of AKL Heights, Kakkanad, attendance check-in/out succeeds automatically. No simulation or override is needed.
+
+2. **If the Reviewer is Away / Remote (Standard Evaluation):**
+   * Tapping **Check In** with real GPS will accurately calculate the true distance (e.g., `5,420m away`) and block the check-in with a red error snackbar:
+     > *"You are X.Xm away from the office. Attendance is only permitted within 200m."*
+   * To test attendance, the reviewer has two easy options:
+
+#### Option A: Quick 1-Tap "Simulate Inside" Action (Recommended)
+* When the red distance error banner appears, it contains an interactive **`Simulate Inside`** button.
+* Tapping **`Simulate Inside`** sets the virtual location to ~10m inside the office coordinates.
+* Tap **Check In** again, and attendance succeeds immediately!
+* **Works 100% Offline:** This option also functions seamlessly while in **Airplane Mode**, allowing reviewers to test offline attendance capture, SQLite outbox storage, and subsequent online sync without any network connection.
+
+#### Option B: Dedicated Debug Simulation Panel
+* Navigate to **Profile (bottom-right tab) > Open Debug Simulation Panel**.
+* The panel provides one-tap presets:
+  * **Inside Office (~10m):** Sets simulated coordinates to `10.03035° N, 76.33585° E` (allowed).
+  * **Outside Office (>200m):** Sets simulated coordinates to `10.0350° N, 76.3358° E` (~550m away, blocked).
+  * **Reset to Real Device GPS:** Clears any simulated override and restores live hardware sensor data.
+
+---
+
+## 6. Testing & Evaluation Guide
 
 You can evaluate the project using any of the following 3 backend setups:
 
@@ -142,14 +176,18 @@ If you want to tunnel your local machine's mock server to the internet:
 
 ---
 
-## 6. How to Test Key Features & Scenarios
+## 7. How to Test Key Features & Scenarios
 
 ### Test 1: Geofenced Attendance (Inside vs. Outside Office)
-1. Open the app and navigate to **Profile > Open Debug Simulation Panel**.
-2. **Test Outside Office:** Tap **Outside Office (>200m)**. Return to Home and tap **Check In**.
-   * *Expected Result:* Red banner: *"You are 550.0m away from the office. Attendance is only permitted within 200m."*
-3. **Test Inside Office:** Tap **Inside Office (~10m)** (or use real GPS if physically at the Kakkanad office). Return to Home and tap **Check In**.
-   * *Expected Result:* Check-in succeeds, timer starts ticking, and record shows `Synced`.
+1. **Test Outside Office (Real or Simulated):**
+   * If testing remotely, tap **Check In** on the Home tab.
+   * *Expected Result:* Red error snackbar appears: *"You are X.Xm away from the office. Attendance is only permitted within 200m."* with a **`Simulate Inside`** button.
+   * *(Alternatively, go to Profile > Open Debug Simulation Panel > tap "Outside Office (>200m)").*
+2. **Test Inside Office:**
+   * Tap the **`Simulate Inside`** button right in the error snackbar (or go to Profile > Open Debug Simulation Panel > tap **"Inside Office (~10m)"**).
+   * A green confirmation indicates location is simulated at the office.
+   * Tap **Check In** again.
+   * *Expected Result:* Check-in succeeds immediately, live shift timer begins ticking, and the attendance record shows the green `Synced` badge.
 
 ---
 
@@ -189,7 +227,7 @@ Navigate to **Profile > Open Debug Simulation Panel**:
 
 ---
 
-## 7. Running Automated Tests
+## 8. Running Automated Tests
 
 Run the test suite from the project root:
 
@@ -207,21 +245,30 @@ flutter test
 
 ---
 
-## 8. Building the Android APK
+## 9. Building the Android APK
 
-### A. Recommended: Split-per-ABI Release Build (~18 MB)
+### A. Universal Release Build (Recommended for Sharing & Evaluators)
+```bash
+flutter build apk --release
+```
+* Generates a single universal APK at `build/app/outputs/flutter-apk/app-release.apk` (~35 MB).
+* **Guaranteed to install and run on any Android phone, tablet, or emulator** without architecture incompatibility.
+
+### B. Split-per-ABI Release Build (~18 MB)
 ```bash
 flutter build apk --release --split-per-abi
 ```
-Generates lightweight architecture-specific APKs in `build/app/outputs/flutter-apk/`:
-* `app-arm64-v8a-release.apk` *(for modern 64-bit Android devices)*
+* Generates architecture-specific APKs in `build/app/outputs/flutter-apk/`:
+  * `app-arm64-v8a-release.apk` *(for modern 64-bit physical Android devices)*
+  * `app-x86_64-release.apk` *(for 64-bit Android Studio emulators)*
 
-### B. Direct ARM64 Debug Build
+### C. Direct ARM64 Debug Build
 ```bash
 flutter build apk --debug --target-platform android-arm64
 ```
 
-### C. Install on Connected Device
+### D. Install Directly on Connected Device
 ```bash
-adb install -r build/app/outputs/flutter-apk/app-debug.apk
+adb install -r build/app/outputs/flutter-apk/app-release.apk
+```
 ```
