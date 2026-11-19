@@ -15,6 +15,8 @@ abstract class AttendanceLocalDataSource {
   Future<void> incrementRetryCount(int id);
   Future<void> clearRemoteEventsForMonth(String month);
   Future<void> deleteRejectedEventsForDate(String date);
+  Future<void> deleteEventsForDate(String date);
+  Future<void> clearAllEvents();
 }
 
 class AttendanceLocalDataSourceImpl implements AttendanceLocalDataSource {
@@ -100,4 +102,11 @@ class AttendanceLocalDataSourceImpl implements AttendanceLocalDataSource {
   @override
   Future<void> deleteRejectedEventsForDate(String date) =>
       _attendanceDao.deleteRejectedEventsForDate(date);
+
+  @override
+  Future<void> deleteEventsForDate(String date) =>
+      _attendanceDao.deleteEventsForDate(date);
+
+  @override
+  Future<void> clearAllEvents() => _attendanceDao.clearAllEvents();
 }

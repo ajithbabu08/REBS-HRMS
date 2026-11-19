@@ -103,4 +103,9 @@ class LeaveRepositoryImpl implements LeaveRepository {
       endDate: endDate,
     );
   }
+
+  @override
+  Future<void> resetLeaveData(String employeeId) async {
+    await _localDataSource.resetLeaveData(employeeId);
+  }
 }

@@ -17,6 +17,7 @@ abstract class LeaveLocalDataSource {
   });
   Future<void> replaceAllRequests(
       String employeeId, List<LeaveRequest> requests);
+  Future<void> resetLeaveData(String employeeId, {int casual = 2, int sick = 3});
 }
 
 class LeaveLocalDataSourceImpl implements LeaveLocalDataSource {
@@ -87,5 +88,10 @@ class LeaveLocalDataSourceImpl implements LeaveLocalDataSource {
       String employeeId, List<LeaveRequest> requests) {
     final companions = requests.map(LeaveRequestModel.toCompanion).toList();
     return _leaveDao.replaceAll(employeeId, companions);
+  }
+
+  @override
+  Future<void> resetLeaveData(String employeeId, {int casual = 2, int sick = 3}) {
+    return _leaveDao.resetLeaveData(employeeId, casual: casual, sick: sick);
   }
 }

@@ -28,4 +28,10 @@ abstract class AttendanceRepository {
 
   /// Check if a check-out event exists for today.
   Future<AttendanceEvent?> getTodayCheckOut(String employeeId, String todayDate);
+
+  /// Reset today's attendance events (for testing resets).
+  Future<void> resetTodayAttendance(String todayDate);
+
+  /// Clear all attendance events from local storage (for testing resets).
+  Future<void> clearAllAttendance();
 }

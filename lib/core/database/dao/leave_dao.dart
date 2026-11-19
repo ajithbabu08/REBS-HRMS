@@ -84,4 +84,21 @@ class LeaveDao extends DatabaseAccessor<AppDatabase> with _$LeaveDaoMixin {
       }
     });
   }
+
+  /// Reset leave balances to default (casual: 2, sick: 3) and delete all cached requests (for testing resets).
+  Future<void> resetLeaveData(String employeeId, {int casual = 2, int sick = 3}) async {
+    await transaction(() async {
+      await (delete(leaveRequestTable)
+            ..where((t) => t.employeeId.equals(employeeId)))
+          .go();
+      await into(leaveBalanceTable).insertOnConflictUpdate(
+        LeaveBalanceTableCompanion(
+          employeeId: Value(employeeId),
+          casual: Value(casual),
+          sick: Value(sick),
+          lastSyncedAt: Value(DateTime.now()),
+        ),
+      );
+    });
+  }
 }

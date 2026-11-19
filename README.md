@@ -223,7 +223,15 @@ Navigate to **Profile > Open Debug Simulation Panel**:
 * **D: Server Error (500):** Simulates transient 500 error. Verifies clean error snackbar and retry queue.
 * **E: Duplicate Conflict (409):** Simulates duplicate submission. Verifies client handles conflict by reconciling with server records.
 * **F: Leave Rejection (422):** Simulates business rejection. Verifies balance is protected.
-* **Reset Mock Server Data:** Resets all attendance and leave records back to initial seeds.
+
+---
+
+### Test 5: Re-testing Attendance & Leaves (Debug Simulation Resets)
+In a real-world enterprise HRMS, an employee can only check in once and check out once per calendar date, and leave balances decrement upon approved applications. For continuous evaluation, open **Profile > Open Debug Simulation Panel**:
+
+* **Reset Today's Attendance (Test Again):** Clears today's check-in and check-out records from both the local SQLite database and the backend. Return to the Home tab and tap **Check In** to immediately test attendance scenarios again on the same day.
+* **Reset Leave Balances (Casual: 2, Sick: 3):** Resets leave balances back to default values and wipes cached test requests locally and on the server. Return to the Leave tab to test leave applications and validation rules from a clean balance.
+* **Factory Reset All Data:** Performs a full cleanup of all local SQLite tables (attendance outbox, leave cache) and remote mock server data back to fresh seed state.
 
 ---
 

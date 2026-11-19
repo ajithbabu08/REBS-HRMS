@@ -130,4 +130,16 @@ class AttendanceDao extends DatabaseAccessor<AppDatabase>
               t.syncStatus.equals('REJECTED')))
         .go();
   }
+
+  /// Delete all attendance events for a specific date (for testing/simulation resets).
+  Future<int> deleteEventsForDate(String date) {
+    return (delete(attendanceTable)
+          ..where((t) => t.companyDate.equals(date)))
+        .go();
+  }
+
+  /// Delete all attendance events (for full testing resets).
+  Future<int> clearAllEvents() {
+    return delete(attendanceTable).go();
+  }
 }

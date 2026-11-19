@@ -17,4 +17,5 @@ abstract class LeaveRepository {
     required DateTime startDate,
     required DateTime endDate,
   });
+  Future<void> resetLeaveData(String employeeId);
 }

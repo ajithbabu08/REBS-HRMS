@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../app/config/environment.dart';
 import '../../../../core/constants/api_endpoints.dart';
@@ -7,6 +8,8 @@ import '../../../../core/di/service_locator.dart';
 import '../../../../core/location/location_service.dart';
 import '../../../../core/network/dio_client.dart';
 import '../../../../core/sync/sync_manager.dart';
+import '../../../attendance/domain/repositories/attendance_repository.dart';
+import '../../../leave/domain/repositories/leave_repository.dart';
 
 class DebugPanelPage extends StatefulWidget {
   const DebugPanelPage({super.key});
@@ -221,16 +224,61 @@ class _DebugPanelPageState extends State<DebugPanelPage> {
     }
   }
 
-  Future<void> _resetServer() async {
+  Future<void> _resetTodayAttendance() async {
     setState(() => _isLoadingScenario = true);
     try {
-      await _dioClient.post(ApiEndpoints.reset);
+      final todayDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
+      await sl<AttendanceRepository>().resetTodayAttendance(todayDate);
+      try {
+        await _dioClient.post(ApiEndpoints.reset);
+      } catch (_) {
+        // Safe if offline
+      }
       setState(() {
         _currentScenario = 'normal';
-        _statusMessage = 'Mock server data reset to initial state!';
+        _statusMessage = '✓ Today\'s attendance reset! Go to Home tab to test Check In again.';
       });
     } catch (e) {
-      setState(() => _statusMessage = 'Failed to reset server: $e');
+      setState(() => _statusMessage = 'Failed to reset: $e');
+    } finally {
+      setState(() => _isLoadingScenario = false);
+    }
+  }
+
+  Future<void> _resetLeaveBalances() async {
+    setState(() => _isLoadingScenario = true);
+    try {
+      final employeeId = _config.defaultEmployeeId;
+      await sl<LeaveRepository>().resetLeaveData(employeeId);
+      try {
+        await _dioClient.post(ApiEndpoints.reset);
+      } catch (_) {
+        // Safe if offline
+      }
+      setState(() {
+        _statusMessage = '✓ Leave balances reset to Casual: 2, Sick: 3 & requests cleared!';
+      });
+    } catch (e) {
+      setState(() => _statusMessage = 'Failed to reset leave: $e');
+    } finally {
+      setState(() => _isLoadingScenario = false);
+    }
+  }
+
+  Future<void> _resetAllData() async {
+    setState(() => _isLoadingScenario = true);
+    try {
+      await sl<AttendanceRepository>().clearAllAttendance();
+      await sl<LeaveRepository>().resetLeaveData(_config.defaultEmployeeId);
+      try {
+        await _dioClient.post(ApiEndpoints.reset);
+      } catch (_) {}
+      setState(() {
+        _currentScenario = 'normal';
+        _statusMessage = '✓ All local & server data (attendance + leaves) reset to fresh initial seeds!';
+      });
+    } catch (e) {
+      setState(() => _statusMessage = 'Failed to reset: $e');
     } finally {
       setState(() => _isLoadingScenario = false);
     }
@@ -442,10 +490,66 @@ class _DebugPanelPageState extends State<DebugPanelPage> {
                         ],
                       ),
                     const Divider(height: 24),
-                    OutlinedButton.icon(
-                      onPressed: _isLoadingScenario ? null : _resetServer,
-                      icon: const Icon(Icons.restore),
-                      label: const Text('Reset Mock Server Data'),
+                    const Text(
+                      'Testing & Simulation Resets:',
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: ElevatedButton.icon(
+                            onPressed: _isLoadingScenario ? null : _resetTodayAttendance,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.teal.shade700,
+                              foregroundColor: Colors.white,
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                            ),
+                            icon: const Icon(Icons.today, size: 18),
+                            label: const Text(
+                              'Reset Today\'s Attendance (Test Again)',
+                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: OutlinedButton.icon(
+                            onPressed: _isLoadingScenario ? null : _resetLeaveBalances,
+                            style: OutlinedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                            ),
+                            icon: const Icon(Icons.beach_access, size: 18),
+                            label: const Text(
+                              'Reset Leave Balances (Casual: 2, Sick: 3)',
+                              style: TextStyle(fontSize: 13),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextButton.icon(
+                            onPressed: _isLoadingScenario ? null : _resetAllData,
+                            style: TextButton.styleFrom(
+                              foregroundColor: Colors.red.shade700,
+                              padding: const EdgeInsets.symmetric(vertical: 8),
+                            ),
+                            icon: const Icon(Icons.restore, size: 16),
+                            label: const Text(
+                              'Factory Reset All Data (Attendance + Leaves)',
+                              style: TextStyle(fontSize: 12),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),

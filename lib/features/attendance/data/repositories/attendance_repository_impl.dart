@@ -280,4 +280,14 @@ class AttendanceRepositoryImpl implements AttendanceRepository {
     records.sort((a, b) => b.date.compareTo(a.date));
     return records;
   }
+
+  @override
+  Future<void> resetTodayAttendance(String todayDate) async {
+    await _localDataSource.deleteEventsForDate(todayDate);
+  }
+
+  @override
+  Future<void> clearAllAttendance() async {
+    await _localDataSource.clearAllEvents();
+  }
 }
